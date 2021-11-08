@@ -7,13 +7,22 @@ import { Cocktail } from '../shared/cocktail.model';
   styleUrls: ['./cocktail-list.component.css'],
 })
 export class CocktailListComponent implements OnInit {
-  public cocktailList: Cocktail[] = [];
-  constructor(private cocktailService: CocktailServiceService) {}
+ public cocktails : Cocktail[]; 
+ private service: CocktailServiceService; 
 
-  ngOnInit(): void {
-    this.addCocktail();
-  }
-  addCocktail() {
-    this.cocktailList = this.cocktailService.getCocktails();
-  }
+ constructor(param_service:CocktailServiceService){
+   this.service = param_service
+   this.cocktails = []
+   
+ }
+ public ngOnInit():void {
+   this.service.getCocktail().subscribe(
+     (cocktailData) => {
+      console.log(cocktailData)
+      this.cocktails = cocktailData
+     }
+   )
+ }
+
+ 
 }
